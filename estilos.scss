@@ -1,44 +1,81 @@
 $backgrounds: #244F75,#60BFBF,#8C4B7E,#F8BB44,#F24B4B;
 $font-stack: 'Lato', sans-serif;
 
-
+// Loop per cada una de les 5 franges
 @for $i from 1 through 5 {
 
     .franja:nth-child(#{$i}) {
-        width: 19vw;
         background: nth($backgrounds,$i);
-        height: 100vh;  
+        width: 19%;
+        min-height: 100vh;  
         display: inline-flex;
         align-items: center;
         justify-content: center;
         font-size: 9vw;
         font-family: $font-stack;
         color: white;
+        overflow: hidden;
+        -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        -webkit-animation-name: franja#{$i};
+            animation-name: franja#{$i};
+        -webkit-animation-delay: 1s;
+                animation-delay: 1s;
     }
+
+
+    //  Abans (:before) d’afegir cada franja, afegirem un pla blanc deformat amb una opacitat de 0.1 mitjançant la funció Skew
+    .franja:nth-child(#{$i}):before {
+        content: "";
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        opacity: 0.1;
+        -webkit-transform-origin: center center;
+                transform-origin: center center;
+        -webkit-transform: skew(30deg) scaleY(1) translate(0, 0);
+                transform: skew(30deg) scaleY(1) translate(0, 0);
+        transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    //  Al posar el mouse sobre un element (hover), modificar el pla aconseguint un efecte semblant a la solució penjada
+    .franja:nth-child(#{$i}):hover:before {
+        -webkit-transform: skew(0deg) scale(3) translate(0, 0);
+                transform: skew(0deg) scale(3) translate(0, 0);
+        opacity: 0.1;
+    }
+
+
+ //  Afegir animacions al entrar els elements a pantalla
+    @-webkit-keyframes franja#{$i} {
+        0% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+                transform: translate3d(-100%, 0, 0);
+        }
+        100% {
+        -webkit-transform: translate3d(0, 0, 0);
+                transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes franja#{$i} {
+        0% {
+            -webkit-transform: translate3d(-100%, 0, 0);
+                    transform: translate3d(-100%, 0, 0);
+        }
+        100% {
+            -webkit-transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0);
+        }
+    }
+
 
 }	
 
-.franges .franja:before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    opacity: 0.05;
-    -webkit-transform-origin: center center;
-            transform-origin: center center;
-    -webkit-transform: skew(30deg) scaleY(1) translate(0, 0);
-            transform: skew(30deg) scaleY(1) translate(0, 0);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-}
-  
-.franja:hover:before {
--webkit-transform: skew(0deg) scale(3) translate(0, 0);
-        transform: skew(0deg) scale(3) translate(0, 0);
-opacity: 0.1;
-}
 
- 
+    
+
